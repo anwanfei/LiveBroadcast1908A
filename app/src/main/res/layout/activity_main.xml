@@ -13,4 +13,24 @@
         android:text="get异步"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btn_post_en"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="post异步"
+        app:layout_constraintTop_toBottomOf="@id/btn_get_en" />
+
+    <Button
+        android:id="@+id/btn_project"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="项目"
+        app:layout_constraintTop_toBottomOf="@id/btn_post_en" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_project" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
