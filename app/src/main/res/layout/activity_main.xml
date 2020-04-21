@@ -21,16 +21,38 @@
         app:layout_constraintTop_toBottomOf="@id/btn_get_en" />
 
     <Button
+        android:id="@+id/btn_post_string"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="psot-string"
+        app:layout_constraintTop_toBottomOf="@id/btn_post_en" />
+
+    <Button
+        android:id="@+id/btn_post_json"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="post-json"
+        app:layout_constraintTop_toBottomOf="@id/btn_post_string" />
+
+    <Button
+        android:id="@+id/btn_psot_stream"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="stream"
+        app:layout_constraintTop_toBottomOf="@id/btn_post_json" />
+
+    <Button
         android:id="@+id/btn_project"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="项目"
-        app:layout_constraintTop_toBottomOf="@id/btn_post_en" />
+        app:layout_constraintTop_toBottomOf="@id/btn_psot_stream" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <Button
+        android:id="@+id/btn_redpackage"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:text="红包"
         app:layout_constraintTop_toBottomOf="@id/btn_project" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

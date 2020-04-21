@@ -19,6 +19,7 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -60,15 +61,15 @@ public class ProjectActivity extends AppCompatActivity implements OnRefreshLoadM
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
         //创建请求体
-//        FormBody doby = new FormBody.Builder()
-//                .add("stage_id", "1")
-//                .add("limit", "20")
-//                .add("page", "1")
-//                .build();
+        FormBody boby = new FormBody.Builder()
+                .add("stage_id", "1")
+                .add("limit", "20")
+                .add("page", "1")
+                .build();
 
         //构建请求
         Request requet = new Request.Builder()
-                .get()
+                .post(boby)
                 .url(footUrl + paramas + page)
                 .build();
 
