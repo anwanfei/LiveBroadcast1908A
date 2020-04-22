@@ -27,4 +27,32 @@
         android:text="get3"
         app:layout_constraintTop_toBottomOf="@id/btn_get2" />
 
+    <Button
+        android:id="@+id/btn_get4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get4"
+        app:layout_constraintTop_toBottomOf="@id/btn_get3" />
+
+    <Button
+        android:id="@+id/btn_psot1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="psot1"
+        app:layout_constraintTop_toBottomOf="@id/btn_get4" />
+
+    <Button
+        android:id="@+id/btn_psot2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="psot2"
+        app:layout_constraintTop_toBottomOf="@id/btn_psot1" />
+
+    <Button
+        android:id="@+id/btn_psot3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="psot3"
+        app:layout_constraintTop_toBottomOf="@id/btn_psot2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

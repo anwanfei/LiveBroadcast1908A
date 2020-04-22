@@ -13,17 +13,23 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.FormBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_get1;
     private Button btn_get2;
     private Button btn_get3;
+    private Button btn_psot1;
+    private Button btn_psot2;
+    private Button btn_psot3;
+    private Button btn_get4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_get2.setOnClickListener(this);
         btn_get3 = (Button) findViewById(R.id.btn_get3);
         btn_get3.setOnClickListener(this);
+        btn_psot1 = (Button) findViewById(R.id.btn_psot1);
+        btn_psot1.setOnClickListener(this);
+        btn_psot2 = (Button) findViewById(R.id.btn_psot2);
+        btn_psot2.setOnClickListener(this);
+        btn_psot3 = (Button) findViewById(R.id.btn_psot3);
+        btn_psot3.setOnClickListener(this);
+        btn_get4 = (Button) findViewById(R.id.btn_get4);
+        btn_get4.setOnClickListener(this);
     }
 
     @Override
@@ -54,7 +68,147 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_get3:
                 get3();
                 break;
+            case R.id.btn_psot1:
+                post1();
+                break;
+            case R.id.btn_psot2:
+                post2();
+                break;
+            case R.id.btn_psot3:
+                post3();
+                break;
+            case R.id.btn_get4:
+                get4();
+                break;
         }
+    }
+
+    private void get4() {
+        //retrofit对象
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(ApiServer.baseUrl)
+                .build();
+
+        //接口服务对象
+        ApiServer apiServer = retrofit.create(ApiServer.class);
+
+        //获取call
+        Call<FoodBean> call = apiServer.get4();
+
+        //call执行请求
+        call.enqueue(new Callback<FoodBean>() {
+            @Override
+            public void onResponse(Call<FoodBean> call, Response<FoodBean> response) {
+                FoodBean foodBean = response.body();
+                btn_get4.setText(foodBean.getData().get(0).getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<FoodBean> call, Throwable t) {
+                Log.e("TAG", "网络错误：" + t.getMessage());
+            }
+        });
+
+    }
+
+    private void post3() {
+        //retrofit对象
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+
+        //接口服务对象
+        ApiServer apiServer = retrofit.create(ApiServer.class);
+
+        //获取call
+        FormBody formBody = new FormBody.Builder()
+                .add("stage_id", "1")
+                .add("limit", "20")
+                .add("page", "1")
+                .build();
+        Call<ResponseBody> call = apiServer.post3(formBody);
+
+        //call执行请求
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String json = response.body().string();
+                    FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
+                    btn_psot3.setText(foodBean.getData().get(0).getTitle());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("TAG", "网络错误：" + t.getMessage());
+            }
+        });
+    }
+
+    private void post2() {
+        //retrofit对象
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+
+        //接口服务对象
+        ApiServer apiServer = retrofit.create(ApiServer.class);
+
+        //获取call
+        HashMap<String, String> map = new HashMap<>();
+        map.put("stage_id", "1");
+        map.put("limit", "20");
+        map.put("page", "1");
+        Call<ResponseBody> call = apiServer.post2(map);
+
+        //call执行请求
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String json = response.body().string();
+                    FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
+                    btn_psot2.setText(foodBean.getData().get(0).getTitle());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("TAG", "网络错误：" + t.getMessage());
+            }
+        });
+    }
+
+    private void post1() {
+        //retrofit对象
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+
+        //接口服务对象
+        ApiServer apiServer = retrofit.create(ApiServer.class);
+
+        //获取call
+        Call<ResponseBody> call = apiServer.post1("5", "20", "1");
+
+        //call执行请求
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String json = response.body().string();
+                    FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
+                    btn_psot1.setText(foodBean.getData().get(0).getTitle());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("TAG", "网络错误：" + t.getMessage());
+            }
+        });
     }
 
     private void get3() {
@@ -74,22 +228,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-            try {
-                String json = response.body().string();
-                FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
-                btn_get3.setText(foodBean.getData().get(0).getTitle());
-            } catch (IOException e) {
-                e.printStackTrace();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String json = response.body().string();
+                    FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
+                    btn_get3.setText(foodBean.getData().get(0).getTitle());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        @Override
-        public void onFailure(Call<ResponseBody> call, Throwable t) {
-            Log.e("TAG", "网络错误：" + t.getMessage());
-        }
-    });
-}
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("TAG", "网络错误：" + t.getMessage());
+            }
+        });
+    }
 
     private void get2() {
         //retrofit对象
