@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //2.构建请求对象
-        final Request request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(footUrl + paramas)
                 .get()
                 .build();
