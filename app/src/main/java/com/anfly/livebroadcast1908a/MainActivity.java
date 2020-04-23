@@ -13,12 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import okhttp3.Cache;
 import okhttp3.CacheControl;
-import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
@@ -29,6 +28,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -126,17 +126,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //call
-        Call call = okHttpClient.newCall(requst);
+        okhttp3.Call call = okHttpClient.newCall(requst);
 
         //call执行请求
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(okhttp3.Call call, IOException e) {
                 Log.e("TAG", "网络错误：" + e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 String json = response.body().string();
                 FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
 
@@ -168,17 +168,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //call
-        Call call = okHttpClient.newCall(requst);
+        okhttp3.Call call = okHttpClient.newCall(requst);
 
         //call执行请求
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(okhttp3.Call call, IOException e) {
                 Log.e("TAG", "网络错误：" + e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 String json = response.body().string();
                 FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
 
@@ -203,17 +203,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //call
-        Call call = okHttpClient.newCall(requst);
+        okhttp3.Call call = okHttpClient.newCall(requst);
 
         //call执行请求
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(okhttp3.Call call, IOException e) {
                 Log.e("TAG", "网络错误：" + e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 String json = response.body().string();
                 FoodBean foodBean = new Gson().fromJson(json, FoodBean.class);
 
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                .addNetworkInterceptor(new LogginInterceptor())
                 .addInterceptor(new CacheIntercetor())
                 .addNetworkInterceptor(new CacheIntercetor())
-                .cache(new Cache(getCacheDir(), 60 * 1024 * 1024))
+                .cache(new okhttp3.Cache(new File(getCacheDir(), "cache"), 60 * 1024 * 1024))
                 .build();
 
         //2.创建请求体
@@ -251,17 +251,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //4.获取call对象
-        Call call = okHttpClient.newCall(requst);
+        okhttp3.Call call = okHttpClient.newCall(requst);
 
         //5.call执行请求
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(okhttp3.Call call, IOException e) {
                 Log.e("TAG", "网络错误：" + e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 //响应行
                 Log.e("ok", "响应行：protocol=" + response.protocol() + "code=" + response.code() + "message=" + response.message());
 
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new CacheIntercetor())
                 .addNetworkInterceptor(new CacheIntercetor())
-                .cache(new Cache(getCacheDir(), 1024 * 1024 * 60))
+                .cache(new okhttp3.Cache(new File(getCacheDir(), "cache"), 60 * 1024 * 1024))
                 .build();
 
         //2.构建请求对象
@@ -301,17 +301,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //3.过去call对象
-        Call call = okHttpClient.newCall(request);
+        okhttp3.Call call = okHttpClient.newCall(request);
 
         //4.call执行请求
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(okhttp3.Call call, IOException e) {
                 Log.e("TAG", "网络错误：" + e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 Log.e("TAG", "onResponse当前线程：" + Thread.currentThread().getName());
                 String json = response.body().string();
 
