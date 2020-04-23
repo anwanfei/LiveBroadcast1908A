@@ -1,58 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_get1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="get1"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_get2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="get2"
-        app:layout_constraintTop_toBottomOf="@id/btn_get1" />
+        <Button
+            android:id="@+id/btn_get1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get1"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_get3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="get3"
-        app:layout_constraintTop_toBottomOf="@id/btn_get2" />
+        <Button
+            android:id="@+id/btn_get2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get2"
+            app:layout_constraintTop_toBottomOf="@id/btn_get1" />
 
-    <Button
-        android:id="@+id/btn_get4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="get4"
-        app:layout_constraintTop_toBottomOf="@id/btn_get3" />
+        <Button
+            android:id="@+id/btn_get3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get3"
+            app:layout_constraintTop_toBottomOf="@id/btn_get2" />
 
-    <Button
-        android:id="@+id/btn_psot1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="psot1"
-        app:layout_constraintTop_toBottomOf="@id/btn_get4" />
+        <Button
+            android:id="@+id/btn_get4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get4"
+            app:layout_constraintTop_toBottomOf="@id/btn_get3" />
 
-    <Button
-        android:id="@+id/btn_psot2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="psot2"
-        app:layout_constraintTop_toBottomOf="@id/btn_psot1" />
+        <Button
+            android:id="@+id/btn_psot1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="psot1"
+            app:layout_constraintTop_toBottomOf="@id/btn_get4" />
 
-    <Button
-        android:id="@+id/btn_psot3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="psot3"
-        app:layout_constraintTop_toBottomOf="@id/btn_psot2" />
+        <Button
+            android:id="@+id/btn_psot2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="psot2"
+            app:layout_constraintTop_toBottomOf="@id/btn_psot1" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_psot3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="psot3"
+            app:layout_constraintTop_toBottomOf="@id/btn_psot2" />
+
+        <Button
+            android:id="@+id/btn_get5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get5"
+            app:layout_constraintTop_toBottomOf="@id/btn_psot3" />
+
+        <Button
+            android:id="@+id/btn_get6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get6"
+            app:layout_constraintTop_toBottomOf="@id/btn_get5" />
+
+        <Button
+            android:id="@+id/btn_get7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get7"
+            app:layout_constraintTop_toBottomOf="@id/btn_get6" />
+
+        <Button
+            android:id="@+id/btn_post4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="post4"
+            app:layout_constraintTop_toBottomOf="@id/btn_get7" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
