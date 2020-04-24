@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,9 @@ public class OkAdapter extends RecyclerView.Adapter<OkAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodBean.DataBean dataBean = list.get(position);
-        Glide.with(context).load(dataBean.getPic()).into(holder.iv_item_ok);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.circleCrop();
+        Glide.with(context).load(dataBean.getPic()).apply(requestOptions).into(holder.iv_item_ok);
         holder.tv_item_ok.setText(dataBean.getTitle());
     }
 
@@ -43,7 +46,6 @@ public class OkAdapter extends RecyclerView.Adapter<OkAdapter.ViewHolder> {
     public int getItemCount() {
         return list.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv_item_ok;

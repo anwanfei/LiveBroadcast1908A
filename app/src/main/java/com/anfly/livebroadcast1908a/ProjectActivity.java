@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,6 +49,8 @@ public class ProjectActivity extends AppCompatActivity implements OnRefreshLoadM
         srl_ok = (SmartRefreshLayout) findViewById(R.id.srl_ok);
 
         rv_ok.setLayoutManager(new LinearLayoutManager(this));
+
+        rv_ok.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
         list = new ArrayList<>();
         adapter = new OkAdapter(list, this);
         rv_ok.setAdapter(adapter);

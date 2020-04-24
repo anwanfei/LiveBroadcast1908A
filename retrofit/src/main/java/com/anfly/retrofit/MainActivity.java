@@ -1,20 +1,32 @@
 package com.anfly.retrofit;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.FormBody;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,6 +48,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_get6;
     private Button btn_get7;
     private Button btn_post4;
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            //调到activity
+            //handler.removeCallbacksAndMessages(null);
+            //handler = null;
+            //finish;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +134,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void psot4() {
         //retrofit对象
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.baseUrl).build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
         FoodJsonBean foodJsonBean = new FoodJsonBean();
@@ -123,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         foodJsonBean.setStage_id("1");
         String json = new Gson().toJson(foodJsonBean);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), json);
-        Call<ResponseBody> call = apiServer.post5("dish_list.php",body,"application/json");
+        Call<ResponseBody> call = apiService.post5("dish_list.php", body, "application/json");
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -149,14 +172,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ApiServer.baseUrl)
+                .baseUrl(ApiService.baseUrl)
                 .build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
-        Call<FoodBean> call = apiServer.get7("dish_list");
+        Call<FoodBean> call = apiService.get7("dish_list");
 
         //call执行请求
         call.enqueue(new Callback<FoodBean>() {
@@ -177,14 +200,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ApiServer.baseUrl)
+                .baseUrl(ApiService.baseUrl)
                 .build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
-        Call<FoodBean> call = apiServer.get6("dish_list.php", "1", "20", "1");
+        Call<FoodBean> call = apiService.get6("dish_list.php", "1", "20", "1");
 
         //call执行请求
         call.enqueue(new Callback<FoodBean>() {
@@ -205,14 +228,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ApiServer.baseUrl)
+                .baseUrl(ApiService.baseUrl)
                 .build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
-        Call<FoodBean> call = apiServer.get5("dish_list.php?stage_id=1&limit=20&page=1");
+        Call<FoodBean> call = apiService.get5("dish_list.php?stage_id=1&limit=20&page=1");
 
         //call执行请求
         call.enqueue(new Callback<FoodBean>() {
@@ -233,14 +256,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ApiServer.baseUrl)
+                .baseUrl(ApiService.baseUrl)
                 .build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
-        Call<FoodBean> call = apiServer.get4();
+        Call<FoodBean> call = apiService.get4();
 
         //call执行请求
         call.enqueue(new Callback<FoodBean>() {
@@ -260,10 +283,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void post3() {
         //retrofit对象
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.baseUrl).build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
         FormBody formBody = new FormBody.Builder()
@@ -271,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .add("limit", "20")
                 .add("page", "1")
                 .build();
-        Call<ResponseBody> call = apiServer.post3(formBody);
+        Call<ResponseBody> call = apiService.post3(formBody);
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -295,17 +318,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void post2() {
         //retrofit对象
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.baseUrl).build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
         HashMap<String, String> map = new HashMap<>();
         map.put("stage_id", "1");
         map.put("limit", "20");
         map.put("page", "1");
-        Call<ResponseBody> call = apiServer.post2(map);
+        Call<ResponseBody> call = apiService.post2(map);
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -329,13 +352,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void post1() {
         //retrofit对象
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.baseUrl).build();
 
         //接口服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //获取call
-        Call<ResponseBody> call = apiServer.post1("5", "20", "1");
+        Call<ResponseBody> call = apiService.post1("5", "20", "1");
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -359,17 +382,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void get3() {
         //retrofit对象
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.baseUrl).build();
 
         //获取服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //服务对象调用方法获得call对象
         HashMap<String, String> map = new HashMap<>();
         map.put("stage_id", "1");
         map.put("limit", "20");
         map.put("page", "1");
-        Call<ResponseBody> call = apiServer.get3(map);
+        Call<ResponseBody> call = apiService.get3(map);
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -393,13 +416,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void get2() {
         //retrofit对象
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiServer.baseUrl).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.baseUrl).build();
 
         //获取服务对象
-        ApiServer apiServer = retrofit.create(ApiServer.class);
+        ApiService apiService = retrofit.create(ApiService.class);
 
         //服务对象调用方法获得call对象
-        Call<ResponseBody> call = apiServer.get2("1", "20", "1");
+        Call<ResponseBody> call = apiService.get2("1", "20", "1");
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -425,14 +448,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void get1() {
         //获取retrofit对象
         Retrofit retrfit = new Retrofit.Builder()
-                .baseUrl(ApiServer.baseUrl)//必须要有
+                .baseUrl(ApiService.baseUrl)//必须要有
+                .client(findOK())
                 .build();
 
         //获取接口服务对象
-        ApiServer apiServer = retrfit.create(ApiServer.class);
+        ApiService apiService = retrfit.create(ApiService.class);
 
         //接口服务对象调用接口中的方法得到call
-        Call<ResponseBody> call = apiServer.get1();
+        Call<ResponseBody> call = apiService.get1();
 
         //call执行请求
         call.enqueue(new Callback<ResponseBody>() {
@@ -457,5 +481,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("TAG", "网络错误：" + t.getMessage());
             }
         });
+    }
+
+    private OkHttpClient findOK() {
+        return new OkHttpClient.Builder()
+                .addNetworkInterceptor(new RetrfitCacheInterceptor())
+                .cache(new Cache(new File(getCacheDir(), "retrfit"), 1024 * 1024 * 10))
+                .build();
+    }
+
+    private class RetrfitCacheInterceptor implements Interceptor {
+        @Override
+        public okhttp3.Response intercept(Chain chain) throws IOException {
+            //请求前
+            Request request = chain.request();
+
+            //判断如果无网时，设置缓存协议
+            if (!isNetworkAvailable()) {
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+            }
+
+            //网络请求
+            okhttp3.Response response = chain.proceed(request);
+
+            //是否有网
+            if (isNetworkAvailable()) {
+                int maxAge = 0;
+                response = response.newBuilder().removeHeader("Pragma")
+                        .addHeader("Cache-Control", "public ,max-age=" + maxAge)
+                        .build();
+                return response;
+            } else {
+                int maxStale = 60 * 60 * 24;
+                response = response.newBuilder().removeHeader("Pragma")
+                        .addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .build();
+                return response;
+            }
+        }
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null) {
+            return info.isAvailable();
+        }
+        return false;
     }
 }

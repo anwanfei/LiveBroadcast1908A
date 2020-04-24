@@ -18,7 +18,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
-public interface ApiServer {
+public interface ApiService{
     //必须以 “/” 结尾
     String baseUrl = "http://www.qubaobei.com/ios/cf/";
 

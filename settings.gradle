@@ -1,3 +1,4 @@
 rootProject.name='LiveBroadcast1908A'
 include ':app'
 include ':retrofit'
+include ':greendao'
