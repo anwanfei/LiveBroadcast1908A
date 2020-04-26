@@ -7,8 +7,8 @@ import com.anfly.greendao.dao.StudentBeanDao;
 import java.util.List;
 
 public class DbHelper {
-    private static DbHelper instance;
     private final StudentBeanDao studentBeanDao;
+    private static volatile DbHelper instance;
 
     public static DbHelper getInstance() {
         if (instance == null) {
@@ -59,6 +59,7 @@ public class DbHelper {
      * @return
      */
     public List<StudentBean> queryAll() {
+        List<StudentBean> studentBeans = studentBeanDao.loadAll();
         List<StudentBean> list = studentBeanDao.queryBuilder().list();
         return list;
     }
