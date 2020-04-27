@@ -23,7 +23,8 @@ public class DbHelper {
 
     private DbHelper() {
         //创建数据库
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(GreenDaoApplication.getApp(), "student.db");
+        //DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(GreenDaoApplication.getApp(), "student.db");
+        GreenDaoHelper devOpenHelper = new GreenDaoHelper(GreenDaoApplication.getApp(), "student.db");
 
         //获取读写对象
         DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
@@ -62,6 +63,46 @@ public class DbHelper {
         List<StudentBean> studentBeans = studentBeanDao.loadAll();
         List<StudentBean> list = studentBeanDao.queryBuilder().list();
         return list;
+    }
+
+    /**
+     * 查询固定名字
+     *
+     * @param name
+     * @return
+     */
+    public List<StudentBean> queryByName(String name) {
+        return studentBeanDao.queryBuilder().where(StudentBeanDao.Properties.Name.eq(name)).list();
+    }
+
+    /**
+     * 查询固定名字和年龄的
+     *
+     * @param student
+     * @return
+     */
+    public List<StudentBean> queryStudent(StudentBean student) {
+        return studentBeanDao.queryBuilder().where(StudentBeanDao.Properties.Name.eq(student.getName()), StudentBeanDao.Properties.Age.gt(student.getAge())).list();
+    }
+
+    /**
+     * 查询第几页的多少条数据
+     *
+     * @param page
+     * @param count
+     * @return
+     */
+    public List<StudentBean> queryPage(int page, int count) {
+        return studentBeanDao.queryBuilder().offset(page * count).limit(count).list();
+    }
+
+    /**
+     * @param studentDao
+     * @return
+     */
+    public StudentBean query(StudentBean studentDao) {
+        StudentBean student = studentBeanDao.queryBuilder().where(StudentBeanDao.Properties.Id.eq(studentDao.getId())).build().unique();
+        return student;
     }
 
     /**

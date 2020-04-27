@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_rxjava1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送事件1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_rxjava2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="链式调用"
+        app:layout_constraintTop_toBottomOf="@id/btn_rxjava1" />
+
+    <Button
+        android:id="@+id/btn_rxjava3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="最简使用"
+        app:layout_constraintTop_toBottomOf="@id/btn_rxjava2" />
+
+    <Button
+        android:id="@+id/btn_rxjava_retrofit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rxjava集合retrofit获取网络数据"
+        app:layout_constraintTop_toBottomOf="@id/btn_rxjava3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

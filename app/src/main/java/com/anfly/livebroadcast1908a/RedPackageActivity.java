@@ -2,7 +2,6 @@ package com.anfly.livebroadcast1908a;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RedPackageActivity extends AppCompatActivity {
@@ -19,11 +18,6 @@ public class RedPackageActivity extends AppCompatActivity {
     private void initView() {
         red_package = (FallingSurfaceView) findViewById(R.id.red_package);
         red_package.run();
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle("YFallingSurfaceView");
-        }
 
     }
 }

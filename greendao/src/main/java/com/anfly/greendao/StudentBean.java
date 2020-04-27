@@ -1,9 +1,9 @@
 package com.anfly.greendao;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class StudentBean {
@@ -13,11 +13,13 @@ public class StudentBean {
     @NotNull
     private String name;
     private String age;
-    @Generated(hash = 1498510806)
-    public StudentBean(long id, @NotNull String name, String age) {
+    private String sex;
+    @Generated(hash = 1061502848)
+    public StudentBean(long id, @NotNull String name, String age, String sex) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.sex = sex;
     }
     @Generated(hash = 2097171990)
     public StudentBean() {
@@ -40,6 +42,12 @@ public class StudentBean {
     public void setAge(String age) {
         this.age = age;
     }
+    public String getSex() {
+        return this.sex;
+    }
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     @Override
     public String toString() {
@@ -47,6 +55,7 @@ public class StudentBean {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age='" + age + '\'' +
+                ", sex='" + sex + '\'' +
                 '}';
     }
 }

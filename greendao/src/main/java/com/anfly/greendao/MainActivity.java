@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         studentBean.setId((long) 5);
         studentBean.setName("anfly1111111111" + 5);
         studentBean.setAge(String.valueOf(5));
+        studentBean.setSex("女");
         DbHelper.getInstance().updata(studentBean);
     }
 
