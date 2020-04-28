@@ -34,4 +34,60 @@
         android:text="Rxjava集合retrofit获取网络数据"
         app:layout_constraintTop_toBottomOf="@id/btn_rxjava3" />
 
+    <Button
+        android:id="@+id/btn_fromarrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="遍历数组"
+        app:layout_constraintTop_toBottomOf="@id/btn_rxjava_retrofit" />
+
+    <Button
+        android:id="@+id/btn_just"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="数组合并并输出"
+        app:layout_constraintTop_toBottomOf="@id/btn_fromarrary" />
+
+    <Button
+        android:id="@+id/btn_range"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="范围输出"
+        app:layout_constraintTop_toBottomOf="@id/btn_just" />
+
+    <Button
+        android:id="@+id/btn_interval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="定时器"
+        app:layout_constraintTop_toBottomOf="@id/btn_range" />
+
+    <Button
+        android:id="@+id/btn_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="过滤器"
+        app:layout_constraintTop_toBottomOf="@id/btn_interval" />
+
+    <Button
+        android:id="@+id/btn_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="map"
+        app:layout_constraintTop_toBottomOf="@id/btn_filter" />
+
+    <Button
+        android:id="@+id/btn_flatmap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="flatmap"
+        app:layout_constraintTop_toBottomOf="@id/btn_map" />
+
+    <Button
+        android:id="@+id/btn_concatmap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="zip"
+        app:layout_constraintTop_toBottomOf="@id/btn_flatmap" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
