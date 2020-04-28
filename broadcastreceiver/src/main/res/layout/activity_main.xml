@@ -14,4 +14,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btn_ordered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="有序广播"
+        app:layout_constraintTop_toBottomOf="@id/btn_normal" />
+
+    <Button
+        android:id="@+id/btn_local"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本地广播"
+        app:layout_constraintTop_toBottomOf="@id/btn_ordered" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

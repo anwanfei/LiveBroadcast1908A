@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainTwoActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,10 +19,12 @@
         </activity>
 
         <receiver android:name=".AnflyReceiver">
-            <intent-filter>
+            <intent-filter android:priority="100">
                 <action android:name="com.anfly.broadcastreceiver.AnflyReceiver" />
             </intent-filter>
         </receiver>
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
