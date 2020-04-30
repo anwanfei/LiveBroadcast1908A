@@ -16,4 +16,15 @@ public class ImpCollectionModel implements CollectionModel {
             collectionCallBack.onQueryFail("查询失败或数据为空");
         }
     }
+
+    @Override
+    public void delete(ConllectionDbBean conllectionDbBean, CollectionCallBack collectionCallBack) {
+        boolean delete = DbHelper.getInstancec().delete(conllectionDbBean);
+        if (delete) {
+            collectionCallBack.onDeleteSuccess("删除成功");
+        } else {
+            collectionCallBack.onDeleteSuccess("删除失败");
+        }
+    }
+
 }

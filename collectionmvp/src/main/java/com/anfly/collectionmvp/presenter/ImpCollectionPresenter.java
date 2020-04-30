@@ -22,6 +22,11 @@ public class ImpCollectionPresenter implements CollectionPresenter, CollectionCa
     }
 
     @Override
+    public void delete(ConllectionDbBean conllectionDbBean) {
+        collectionModel.delete(conllectionDbBean, this);
+    }
+
+    @Override
     public void onQuerySuccess(List<ConllectionDbBean> list) {
         collectionVieiw.onQuerySuccess(list);
     }
@@ -29,5 +34,15 @@ public class ImpCollectionPresenter implements CollectionPresenter, CollectionCa
     @Override
     public void onQueryFail(String error) {
         collectionVieiw.onQueryFail(error);
+    }
+
+    @Override
+    public void onDeleteSuccess(String msg) {
+        collectionVieiw.onDeleteSuccess(msg);
+    }
+
+    @Override
+    public void onDeleteFail(String error) {
+        collectionVieiw.onDeleteFail(error);
     }
 }

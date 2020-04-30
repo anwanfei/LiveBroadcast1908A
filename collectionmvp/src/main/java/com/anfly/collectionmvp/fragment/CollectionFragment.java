@@ -22,12 +22,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CollectionFragment extends Fragment implements CollectionVieiw {
-
+public class CollectionFragment extends Fragment implements CollectionVieiw, CollectionAdapter.OnItemClickListener {
     private RecyclerView rv_collection;
     private ArrayList<ConllectionDbBean> list;
     private CollectionAdapter adapter;
     private ImpCollectionPresenter presenter;
+    private int position;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -68,6 +68,8 @@ public class CollectionFragment extends Fragment implements CollectionVieiw {
         adapter = new CollectionAdapter(list, getActivity());
 
         rv_collection.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -79,5 +81,24 @@ public class CollectionFragment extends Fragment implements CollectionVieiw {
     @Override
     public void onQueryFail(String error) {
         Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteSuccess(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        list.remove(position);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDeleteFail(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        this.position = position;
+        ConllectionDbBean conllectionDbBean = list.get(position);
+        presenter.delete(conllectionDbBean);
     }
 }
