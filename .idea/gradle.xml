@@ -12,8 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/broadcastreceiver" />
+            <option value="$PROJECT_DIR$/butterknife" />
             <option value="$PROJECT_DIR$/collection1908a" />
             <option value="$PROJECT_DIR$/collectionmvp" />
+            <option value="$PROJECT_DIR$/eventbus" />
+            <option value="$PROJECT_DIR$/glide" />
             <option value="$PROJECT_DIR$/greendao" />
             <option value="$PROJECT_DIR$/loninmvp" />
             <option value="$PROJECT_DIR$/mvp" />
