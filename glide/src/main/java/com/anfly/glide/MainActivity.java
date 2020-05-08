@@ -19,6 +19,9 @@ import com.bumptech.glide.request.target.Target;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.GrayscaleTransformation;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView iv1;
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //圆角
         RoundedCorners roundedCorners = new RoundedCorners(8);
         requestOptions.transform(roundedCorners);
+        //修改模糊和灰白
+        requestOptions.transform(new BlurTransformation(5), new GrayscaleTransformation());
         //禁止任何转换
 //        requestOptions.dontTransform();
 

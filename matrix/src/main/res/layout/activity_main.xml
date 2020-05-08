@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_scale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="缩放"
+        app:layout_constraintBottom_toTopOf="@id/btn_rotate" />
+
+    <Button
+        android:id="@+id/btn_rotate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="旋转 "
+        app:layout_constraintBottom_toTopOf="@id/btn_translate" />
+
+    <Button
+        android:id="@+id/btn_translate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="移动"
+        app:layout_constraintBottom_toTopOf="@id/btn_skew" />
+
+    <Button
+        android:id="@+id/btn_skew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="倾斜"
+        app:layout_constraintBottom_toTopOf="@id/btn_no_green" />
+
+    <Button
+        android:id="@+id/btn_no_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="去绿"
+        app:layout_constraintBottom_toTopOf="@id/btn_no_red" />
+
+    <Button
+        android:id="@+id/btn_no_red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="去红"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_height="300dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
