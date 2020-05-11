@@ -28,4 +28,25 @@
         android:text="retrofit上传文件"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <Button
+        android:id="@+id/btn_upload_con"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="con上传文件"
+        app:layout_constraintBottom_toTopOf="@id/btn_upload_ok" />
+
+    <Button
+        android:id="@+id/btn_upload_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拍照上传文件"
+        app:layout_constraintBottom_toTopOf="@id/btn_upload_con" />
+
+    <Button
+        android:id="@+id/btn_upload_album"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="相册选取上传文件"
+        app:layout_constraintBottom_toTopOf="@id/btn_upload_camera" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
