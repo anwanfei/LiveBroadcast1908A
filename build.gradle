@@ -1,14 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        maven { url'https://maven.aliyun.com/repository/public/' }
-        maven { url'https://maven.aliyun.com/repository/google/' }
-        maven { url'https://maven.aliyun.com/repository/jcenter/' }
-        maven { url'https://maven.aliyun.com/repository/central/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { url 'https://maven.aliyun.com/repository/central/' }
         jcenter()
         mavenCentral() // 添加的代码
     }
@@ -24,11 +24,11 @@ buildscript {
 allprojects {
     repositories {
         google()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        maven { url'https://maven.aliyun.com/repository/public/' }
-        maven { url'https://maven.aliyun.com/repository/google/' }
-        maven { url'https://maven.aliyun.com/repository/jcenter/' }
-        maven { url'https://maven.aliyun.com/repository/central/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { url 'https://maven.aliyun.com/repository/central/' }
         jcenter()
     }
 }

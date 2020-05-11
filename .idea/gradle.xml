@@ -30,6 +30,7 @@
             <option value="$PROJECT_DIR$/mvp" />
             <option value="$PROJECT_DIR$/retrofit" />
             <option value="$PROJECT_DIR$/rxjava" />
+            <option value="$PROJECT_DIR$/upload" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

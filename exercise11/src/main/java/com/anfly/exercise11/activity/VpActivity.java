@@ -9,7 +9,6 @@ import com.anfly.exercise11.R;
 import com.anfly.exercise11.adapter.VpPhotoAdaspter;
 import com.anfly.exercise11.bean.FoodBean;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,7 +25,6 @@ public class VpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vp);
         ButterKnife.bind(this);
         initData();
-
     }
 
     private void initData() {
