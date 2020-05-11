@@ -15,10 +15,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:text="ok上传文件"
         android:id="@+id/btn_upload_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="ok上传文件"
+        app:layout_constraintBottom_toTopOf="@id/btn_upload_retrofit" />
+
+    <Button
+        android:id="@+id/btn_upload_retrofit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="retrofit上传文件"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
