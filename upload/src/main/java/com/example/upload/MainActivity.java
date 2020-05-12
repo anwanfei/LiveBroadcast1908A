@@ -1,13 +1,16 @@
 package com.example.upload;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +86,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_upload_camera.setOnClickListener(this);
         btn_upload_album = (Button) findViewById(R.id.btn_upload_album);
         btn_upload_album.setOnClickListener(this);
+
+        addPermission();
+    }
+
+    private void addPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
     }
 
     @Override
@@ -113,8 +126,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 chepermission();
                 break;
             case R.id.btn_upload_album:
+                opALbum();
                 break;
         }
+    }
+
+    private void opALbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, 300);
     }
 
     private void chepermission() {
@@ -161,8 +181,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 200) {
             uploadOk(cameraFile);
+        } else if (requestCode == 300) {
+            Uri uri = data.getData();
+            File file = getFileFromUri(uri);
+            if (file.exists()) {
+                uploadOk(file);
+            }
         }
 
+    }
+
+    private File getFileFromUri(Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+
+        // 处理uri,7.0以后的fileProvider 把URI 以content provider 方式 对外提供的解析方法
+        switch (uri.getScheme()) {
+            case "content"://7.0及以后
+                return getFileFromContentUri(uri);
+            case "file"://7.0以前
+                return new File(uri.getPath());
+            default:
+                return null;
+        }
+    }
+
+    private File getFileFromContentUri(Uri uri) {
+        File file = null;
+        String filePath = null;
+        ContentResolver resolver = getContentResolver();
+        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = resolver.query(uri, filePathColumn, null, null, null);
+
+        if (cursor.moveToNext()) {
+            filePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
+        }
+
+        cursor.close();
+        if (!TextUtils.isEmpty(filePath)) {
+            file = new File(filePath);
+        }
+        return file;
     }
 
     private void uploadRetrofit() {
