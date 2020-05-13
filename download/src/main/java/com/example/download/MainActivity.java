@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -42,6 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressBar pb1;
     private int count;
     private TextView tv1;
+    private Button btn_multi;
+    private ProgressBar pb2;
+    private TextView tv2;
+    private ProgressBar pb3;
+    private TextView tv3;
+    private String path = Environment.getExternalStorageDirectory() + "/con.apk";
+    private int THREAD_COUNT = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pb1.setOnClickListener(this);
         tv1 = (TextView) findViewById(R.id.tv1);
         tv1.setOnClickListener(this);
+        btn_multi = (Button) findViewById(R.id.btn_multi);
+        btn_multi.setOnClickListener(this);
+        pb2 = (ProgressBar) findViewById(R.id.pb2);
+        pb2.setOnClickListener(this);
+        tv2 = (TextView) findViewById(R.id.tv2);
+        tv2.setOnClickListener(this);
+        pb3 = (ProgressBar) findViewById(R.id.pb3);
+        pb3.setOnClickListener(this);
+        tv3 = (TextView) findViewById(R.id.tv3);
+        tv3.setOnClickListener(this);
     }
 
     @Override
@@ -76,7 +94,131 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_con:
                 downloadCon();
                 break;
+            case R.id.btn_multi:
+                downLoadMulti();
+                break;
         }
+    }
+
+    private void downLoadMulti() {
+        ThreadManager.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //1.获取文件大小
+                    URL url = new URL(downloadUrl);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    long contentLength = con.getContentLength();
+
+                    //2.创建一个与文件一样大的空壳文件
+                    RandomAccessFile raf = new RandomAccessFile(path, "rw");
+                    raf.setLength(contentLength);
+
+                    //3.分块
+                    long block = contentLength / THREAD_COUNT;
+
+                    //4.计算每一块范围
+                    for (int i = 0; i < THREAD_COUNT; i++) {
+                        long start = i * block;
+                        long end = (i + 1) * block - 1;
+                        if (i == THREAD_COUNT - 1) {
+                            end = contentLength - 1;
+                        }
+                        //5.下载
+                        down(i, start, end);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void down(final int thredId, final long start, final long end) {
+        ThreadManager.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                //定义变量保存当前线程的当前位置
+                long curPosition = start;
+
+                //获取保存位置
+                long position = (long) SharedPreferencesUtils.getParam(MainActivity.this, thredId + "", 0L);
+                if (position != 0) {
+                    //断点续传
+                    curPosition = position;
+                    Log.e("TAG", thredId + "断点续传" + position);
+                } else {
+                    //非断点续传
+                    Log.e("TAG", thredId + "非断点续传下载");
+                }
+
+
+                try {
+                    //获取con
+                    URL url = new URL(downloadUrl);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestProperty("Range", "bytes=" + curPosition + "-" + end);
+
+                    //获取请求码
+                    int responseCode = con.getResponseCode();
+
+                    //执行网络请求，请求部分资源206
+                    if (responseCode == HttpURLConnection.HTTP_PARTIAL) {
+                        InputStream inputStream = con.getInputStream();
+                        RandomAccessFile raf = new RandomAccessFile(path, "rw");
+                        raf.seek(curPosition);
+                        long count = 0;
+                        byte[] bytes = new byte[1024 * 10];
+                        int len = -1;
+                        final long length = end - curPosition;
+
+                        while ((len = inputStream.read(bytes)) != -1) {
+                            raf.write(bytes, 0, len);
+                            curPosition += len;
+                            count += len;
+                            Log.e("TAG", "线程: " + thredId + "总长度:" + length + "下载:" + count);
+
+                            SharedPreferencesUtils.setParam(MainActivity.this, thredId + "", curPosition);
+                            SharedPreferencesUtils.setParam(MainActivity.this, thredId + "count", count);
+
+                            final long finalCount = count;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    switch (thredId) {
+                                        case 0:
+                                            pb1.setMax((int) length);
+                                            pb1.setProgress((int) finalCount);
+                                            tv1.setText((int) (100f * finalCount / length) + "%");
+                                            break;
+                                        case 1:
+                                            pb2.setMax((int) length);
+                                            pb2.setProgress((int) finalCount);
+                                            tv2.setText((int) (100f * finalCount / length) + "%");
+                                            break;
+                                        case 2:
+                                            pb3.setMax((int) length);
+                                            pb3.setProgress((int) finalCount);
+                                            tv3.setText((int) (100f * finalCount / length) + "%");
+                                            break;
+                                    }
+                                }
+                            });
+                        }
+                        inputStream.close();
+                        raf.close();
+
+                        Log.d("TAG", "线程: " + thredId + "下载完毕");
+                        SharedPreferencesUtils.setParam(MainActivity.this, thredId + "", 0L);
+                        SharedPreferencesUtils.setParam(MainActivity.this, thredId + "count", 0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
     }
 
     private void downloadCon() {
