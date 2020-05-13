@@ -1,5 +1,6 @@
 package com.example.download;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
             byte[] bytes = new byte[1024 * 10];
-            int lenght;
+            int lenght = -1;
             while ((lenght = inputStream.read(bytes)) != -1) {
                 fileOutputStream.write(bytes, 0, lenght);
                 count += lenght;
@@ -178,10 +180,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void run() {
                     Toast.makeText(MainActivity.this, "下载成功", Toast.LENGTH_SHORT).show();
+                    InstallUtil.installApk(MainActivity.this, Environment.getExternalStorageDirectory() + "/con.apk");
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    //授权 可以安装apk的权限后，回调此方法，进行安装
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2019) {
+            InstallUtil.installApk(this, Environment.getExternalStorageDirectory() + "/con.apk");//再次执行安装流程，包含权限判等
         }
     }
 }
