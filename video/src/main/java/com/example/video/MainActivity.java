@@ -3,11 +3,14 @@ package com.example.video;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private VideoView vv;
     private Button btn_vv;
     private int i = 0;
+    private Button btn_mp;
+    private Button btn_retriever;
+    private ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_vv = (Button) findViewById(R.id.btn_vv);
         btn_vv.setOnClickListener(this);
+        btn_mp = (Button) findViewById(R.id.btn_mp);
+        btn_mp.setOnClickListener(this);
+        btn_retriever = (Button) findViewById(R.id.btn_retriever);
+        btn_retriever.setOnClickListener(this);
+        iv = (ImageView) findViewById(R.id.iv);
+        iv.setOnClickListener(this);
     }
 
     @Override
@@ -67,7 +79,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_vv:
                 vv();
                 break;
+            case R.id.btn_mp:
+                Intent intent = new Intent(this, MPActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_retriever:
+                retriever();
+                break;
         }
+    }
+
+    private void retriever() {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(videos[0]);
+        Bitmap frameAtTime = retriever.getFrameAtTime(7000*1000);
+        iv.setImageBitmap(frameAtTime);
     }
 
     private void vv() {

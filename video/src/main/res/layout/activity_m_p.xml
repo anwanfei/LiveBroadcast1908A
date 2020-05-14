@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MPActivity">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始播放"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_pause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="暂停播放"
+        app:layout_constraintTop_toBottomOf="@id/btn_start" />
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止播放"
+        app:layout_constraintTop_toBottomOf="@id/btn_pause" />
+
+    <Button
+        android:id="@+id/btn_goon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="继续播放"
+        app:layout_constraintTop_toBottomOf="@id/btn_stop" />
+
+    <SurfaceView
+        android:id="@+id/sf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_goon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
