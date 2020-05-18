@@ -30,6 +30,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int VIEW_TYPE_ONE = 1;
     private int VIEW_TYPE_TWO = 2;
     private final LayoutInflater inflater;
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public HomeAdapter(Context context, ArrayList<FoodBean.DataBean> list, ArrayList<BannerBean.DataBean> banners) {
         this.context = context;
@@ -77,6 +82,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Glide.with(context).load(dataBean.getPic()).into(viewHolderTwo.ivHoemItem);
             viewHolderTwo.tvHomeItem.setText(dataBean.getTitle());
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(position - 1);
+                }
+            }
+        });
     }
 
     @Override
@@ -113,5 +127,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 }

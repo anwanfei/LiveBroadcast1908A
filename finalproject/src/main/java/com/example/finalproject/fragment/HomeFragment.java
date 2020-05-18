@@ -16,7 +16,9 @@ import com.example.finalproject.adapter.HomeAdapter;
 import com.example.finalproject.api.ApiSerivce;
 import com.example.finalproject.bean.BannerBean;
 import com.example.finalproject.bean.FoodBean;
+import com.example.finalproject.bean.FoodDbBean;
 import com.example.finalproject.presenter.ImpHomePrensenter;
+import com.example.finalproject.utils.DbHelper;
 import com.example.finalproject.view.HomeView;
 
 import java.util.ArrayList;
@@ -106,6 +108,22 @@ public class HomeFragment extends Fragment implements HomeView {
         banners = new ArrayList<>();
         adapter = new HomeAdapter(getActivity(), list, banners);
         rvHome.setAdapter(adapter);
+        adapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                FoodBean.DataBean dataBean = list.get(position);
+                FoodDbBean foodDbBean = new FoodDbBean();
+                foodDbBean.setId(Long.valueOf(position));
+                foodDbBean.setPath(dataBean.getPic());
+                foodDbBean.setTitle(dataBean.getTitle());
+                long insert = DbHelper.getDbHelper().insert(foodDbBean);
+                if (insert >= 0) {
+                    Toast.makeText(getActivity(), "收藏成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "收藏失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
