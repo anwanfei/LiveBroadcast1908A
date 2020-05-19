@@ -17,8 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.finalproject.R;
 import com.example.finalproject.api.ApiSerivce;
+import com.example.finalproject.bean.DownLoadProgressBean;
 import com.example.finalproject.bean.UploadBean;
+import com.example.finalproject.service.DownLoadService;
 import com.example.finalproject.utils.InstallUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,16 +58,34 @@ public class DownUpLoadActivity extends AppCompatActivity {
     ProgressBar pbDownload;
     @BindView(R.id.tv_progress)
     TextView tvProgress;
+    @BindView(R.id.btn_download_in_service)
+    Button btnDownloadInService;
     private File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/b.jpg");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_down_up_load);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_upload, R.id.btn_download})
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getProgress(DownLoadProgressBean progressBean){
+        long count = progressBean.getCount();
+        long contentLength = progressBean.getContentLength();
+        pbDownload.setMax((int) contentLength);
+        pbDownload.setProgress((int) count);
+        tvProgress.setText((int) 100 * count / contentLength + "%");
+    }
+
+    @OnClick({R.id.btn_upload, R.id.btn_download, R.id.btn_download_in_service})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_upload:
@@ -70,7 +94,14 @@ public class DownUpLoadActivity extends AppCompatActivity {
             case R.id.btn_download:
                 downLoad();
                 break;
+            case R.id.btn_download_in_service:
+                downLoadInservice();
+                break;
         }
+    }
+
+    private void downLoadInservice() {
+        startService(new Intent(this, DownLoadService.class));
     }
 
     private void downLoad() {

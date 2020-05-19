@@ -15,8 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.DownUpLoadActivity"></activity>
-        <activity android:name=".activity.SplashActivity"></activity>
+        <service
+            android:name=".service.DownLoadService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".activity.DownUpLoadActivity" />
+        <activity android:name=".activity.SplashActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
