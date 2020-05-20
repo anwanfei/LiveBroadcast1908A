@@ -57,6 +57,17 @@ public class DbHelper {
     }
 
     /**
+     * 模糊查询
+     *
+     * @param info
+     * @return
+     */
+    public List<FoodDbBean> querLike(String info) {
+        List<FoodDbBean> list = foodDbBeanDao.queryBuilder().where(FoodDbBeanDao.Properties.Title.like("%" + info + "%")).list();
+        return list;
+    }
+
+    /**
      * 返回全部
      *
      * @return

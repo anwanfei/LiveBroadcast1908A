@@ -14,8 +14,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import retrofit2.http.Streaming;
-import retrofit2.http.Url;
 
 public interface ApiSerivce {
     String baseFoodUrl = "http://www.qubaobei.com/";
@@ -43,7 +43,7 @@ public interface ApiSerivce {
     @GET("project/tree/json")
     Observable<TabBean> getTabs();
 
-    @GET("project/list/")
-    Observable<PublicBean> getPublicFragmentList(@Url int id);
+    @GET("project/list/1/json")
+    Observable<PublicBean> getPublicFragmentList(@Query("cid") int id);
 
 }
