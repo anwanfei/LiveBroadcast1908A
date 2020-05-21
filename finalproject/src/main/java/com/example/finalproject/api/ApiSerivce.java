@@ -2,7 +2,9 @@ package com.example.finalproject.api;
 
 import com.example.finalproject.bean.BannerBean;
 import com.example.finalproject.bean.FoodBean;
+import com.example.finalproject.bean.RxDataBean;
 import com.example.finalproject.bean.PublicBean;
+import com.example.finalproject.bean.SmartBean;
 import com.example.finalproject.bean.TabBean;
 import com.example.finalproject.bean.UploadBean;
 
@@ -14,8 +16,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 public interface ApiSerivce {
     String baseFoodUrl = "http://www.qubaobei.com/";
@@ -23,6 +27,10 @@ public interface ApiSerivce {
     String baseUploadUrl = "http://yun918.cn/";
     //    String baseDownUrl = "http://cdn.banmi.com/";
     String baseDownUrl = "https://dl.hdslb.com/";
+    String baseSmartUrl = "http://gank.io";
+
+    String baseComposeUrl = "https://gitee.com/";
+
 
     @GET("ios/cf/dish_list.php?stage_id=1&limit=20&page=1")
     Observable<FoodBean> getHomeList();
@@ -45,5 +53,17 @@ public interface ApiSerivce {
 
     @GET("project/list/1/json")
     Observable<PublicBean> getPublicFragmentList(@Query("cid") int id);
+
+    @GET("/api/data/福利/20/{page}")
+    Observable<SmartBean> getSmarts(@Path("page") int page);
+
+    @GET("AnDrFly/LiveBroadcast/raw/master/homedata")
+    Observable<RxDataBean> getRxData();
+
+    @GET()
+    Observable<BannerBean> getBannner(@Url String baseBannerUrl);
+
+    @GET()
+    Observable<PublicBean> getArticleList(@Url String articleUrl);
 
 }

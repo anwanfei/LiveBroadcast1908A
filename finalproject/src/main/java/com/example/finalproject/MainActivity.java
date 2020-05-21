@@ -25,6 +25,8 @@ import com.example.finalproject.activity.DownUpLoadActivity;
 import com.example.finalproject.adapter.MainAdapter;
 import com.example.finalproject.fragment.CollectionFragment;
 import com.example.finalproject.fragment.HomeFragment;
+import com.example.finalproject.fragment.RxjavaFragment;
+import com.example.finalproject.fragment.SmartFragment;
 import com.example.finalproject.fragment.WechatFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -48,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initListener();
     }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
 
     private void initListener() {
         //头部监听
@@ -128,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new HomeFragment());
         fragments.add(new CollectionFragment());
         fragments.add(new WechatFragment());
+        fragments.add(new SmartFragment());
+        fragments.add(new RxjavaFragment());
 
         MainAdapter adapter = new MainAdapter(getSupportFragmentManager(), fragments);
         vp_main.setAdapter(adapter);
@@ -136,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
         tab_main.getTabAt(0).setText("首页").setIcon(R.drawable.selector_home);
         tab_main.getTabAt(1).setText("收藏").setIcon(R.drawable.selector_collection);
         tab_main.getTabAt(2).setText("公众号").setIcon(R.drawable.selector_collection);
+        tab_main.getTabAt(3).setText("美女").setIcon(R.drawable.selector_collection);
+        tab_main.getTabAt(4).setText("Rx").setIcon(R.drawable.selector_collection);
+
 
         toolbar.setTitle("首页");
         toolbar.setLogo(R.mipmap.ic_launcher);
